@@ -7,6 +7,10 @@ import com.spectralsolutions.elementupdater.objects.UpdateArgs;
 
 /**
  * Created by Tius on 9/25/2016.
+ *
+ * Description: This class reads update information from a formatted dropbox text file
+ * and is very quick to implement
+ *
  */
 public abstract class UpdateDetectorDropbox implements IUpdateDetectable {
     //Url to a text file formatted with the current update information
