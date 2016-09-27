@@ -53,7 +53,7 @@ public class ActionExtractJar implements IUpdateAction {
             }
             return new UpdateActionResult(false, errormessage);
         } else{
-            return new UpdateActionResult(false, "Error");
+            return new UpdateActionResult(false, "Having trouble reaching the server - server returned a null string");
         }
     }
 }

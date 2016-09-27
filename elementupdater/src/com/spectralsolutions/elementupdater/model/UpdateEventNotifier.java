@@ -7,8 +7,11 @@ import java.util.List;
 
 /**
  * Created by Tius on 9/25/2016.
+ *
+ * An abstract class to enable the ability for an implmeneting class to register listeners
+ * and forward event triggers to them
  */
-public class UpdateEventNotifier {
+public abstract class UpdateEventNotifier {
     private List<IUpdateEventsListener> listeners = new ArrayList<IUpdateEventsListener>();
 
     public void addListener(IUpdateEventsListener listener) {
