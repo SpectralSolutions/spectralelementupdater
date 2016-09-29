@@ -1,5 +1,5 @@
-package com.spectralsolutions.elementupdater.model;
-import com.spectralsolutions.elementupdater.interfaces.*;
+package com.spectralsolutions.elementupdater;
+import com.spectralsolutions.elementupdater.common.*;
 import com.spectralsolutions.elementupdater.objects.UpdateArgs;
 
 import java.util.ArrayList;
@@ -14,23 +14,23 @@ import java.util.List;
 public abstract class UpdateEventNotifier {
     private List<IUpdateEventsListener> listeners = new ArrayList<IUpdateEventsListener>();
 
-    public void addListener(IUpdateEventsListener listener) {
+    public void AddListener(IUpdateEventsListener listener) {
         listeners.add(listener);
     }
 
-    public void UpdateDetected(UpdateArgs UpdateArgs) {
+    protected void UpdateDetected(UpdateArgs UpdateArgs) {
         // Notify everybody that may be interested.
         for (IUpdateEventsListener l : listeners)
             l.UpdateDetectedHandler(UpdateArgs);
     }
 
-    public void UpdateSuccess() {
+    protected void UpdateSuccess() {
         // Notify everybody that may be interested.
         for (IUpdateEventsListener l : listeners)
             l.UpdateSuccessHandler();
     }
 
-    public void UpdateFailure(String message) {
+    protected void UpdateFailure(String message) {
         // Notify everybody that may be interested.
         for (IUpdateEventsListener l : listeners)
             l.UpdateFailureHandler(message);

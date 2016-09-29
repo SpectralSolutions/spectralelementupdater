@@ -1,13 +1,12 @@
 package com.spectralsolutions.elementupdater.storage;
 
-import com.spectralsolutions.elementupdater.interfaces.ILocalStorage;
+import com.spectralsolutions.elementupdater.common.ILocalStorage;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Node;
-import org.w3c.dom.Element;
+
 import java.io.File;
+import java.io.FileNotFoundException;
 
 /**
  * Created by Tius on 9/26/2016.
@@ -19,6 +18,10 @@ public class LocalStorageXML implements ILocalStorage {
     {
         this.xmlfilelocation = xmlfilelocation;
     }
+    public LocalStorageXML()
+    {
+        this.xmlfilelocation = "version.xml";//Current working directory;
+    }
 
     @Override
     public String ReadVersion() {
@@ -26,16 +29,21 @@ public class LocalStorageXML implements ILocalStorage {
         try
         {
             File xmlfile = new File(this.xmlfilelocation);
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(xmlfile);
-            //optional, but recommended
-            //read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
-            doc.getDocumentElement().normalize();
+            if(xmlfile.exists()) {
+                DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+                Document doc = dBuilder.parse(xmlfile);
+                //optional, but recommended
+                //read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
+                doc.getDocumentElement().normalize();
 
-            version =  doc.getElementsByTagName("Version").item(0).getTextContent();
+                version = doc.getElementsByTagName("Version").item(0).getTextContent();
+            }else
+            {
+                throw new FileNotFoundException(String.format("Cannot find xml file: %s",xmlfilelocation));
+            }
 
-        }catch(Exception ex){}
+        }catch(Exception ex){System.out.println(ex.getMessage());}
         return  version;
     }
 
@@ -44,16 +52,21 @@ public class LocalStorageXML implements ILocalStorage {
         try
         {
             File xmlfile = new File(this.xmlfilelocation);
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(xmlfile);
-            //optional, but recommended
-            //read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
-            doc.getDocumentElement().normalize();
+            if(xmlfile.exists()) {
+                DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+                Document doc = dBuilder.parse(xmlfile);
+                //optional, but recommended
+                //read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
+                doc.getDocumentElement().normalize();
 
-            version =  doc.getElementsByTagName(nodename).item(0).getTextContent();
+                version = doc.getElementsByTagName(nodename).item(0).getTextContent();
+            }else
+            {
+                throw new FileNotFoundException(String.format("Cannot find xml file: %s",xmlfilelocation));
+            }
 
-        }catch(Exception ex){}
+        }catch(Exception ex){System.out.println(ex.getMessage());}
         return  version;
     }
 

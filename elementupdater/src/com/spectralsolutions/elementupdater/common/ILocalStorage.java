@@ -1,4 +1,4 @@
-package com.spectralsolutions.elementupdater.interfaces;
+package com.spectralsolutions.elementupdater.common;
 
 /**
  * Created by Tius on 9/25/2016.

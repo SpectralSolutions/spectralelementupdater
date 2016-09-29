@@ -301,3 +301,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+*.class
+*.class
+out/production/elementupdater/com/spectralsolutions/elementupdater/InstallUtility.class

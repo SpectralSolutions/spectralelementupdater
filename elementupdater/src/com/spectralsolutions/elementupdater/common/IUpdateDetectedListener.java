@@ -1,4 +1,4 @@
-package com.spectralsolutions.elementupdater.interfaces;
+package com.spectralsolutions.elementupdater.common;
 
 import com.spectralsolutions.elementupdater.objects.UpdateArgs;
 

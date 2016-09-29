@@ -1,6 +1,6 @@
 package com.spectralsolutions.elementupdater.storage;
 
-import com.spectralsolutions.elementupdater.interfaces.ILocalStorage;
+import com.spectralsolutions.elementupdater.common.ILocalStorage;
 
 /**
  * Created by Tius on 9/26/2016.
