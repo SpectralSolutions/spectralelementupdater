@@ -5,6 +5,8 @@ import com.spectralsolutions.elementupdater.common.IProgressCallback;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.ByteBuffer;
@@ -38,6 +40,7 @@ public class InstallUtility {
                 fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
                 result = true;
             } catch (Exception ex) {
+                ex.printStackTrace();
                 result = false;
             }
         } catch (Exception ex) {
@@ -111,7 +114,7 @@ public class InstallUtility {
             while (enumEntries.hasMoreElements()) {
                 java.util.jar.JarEntry file = (java.util.jar.JarEntry) enumEntries.nextElement();
                 java.io.File f = new java.io.File(installDirectory + java.io.File.separator + file.getName());
-                System.out.println(String.format("Extracting %s", f.getName()));
+                System.out.println(String.format("Extracting %s", f.getName()));//might be worth seperating logging logic like this
                 if (file.isDirectory()) { // if its a directory, create it
                     f.getParentFile().mkdirs();
                     continue;
@@ -169,9 +172,17 @@ public class InstallUtility {
                 sizeRead += n;
                 progress = size > 0 ? (double) sizeRead / (double) size
                         * 100.0 : -1.0;
-                delegate.callback(this, progress);
+                delegate.callback(this, round(progress,0));
             }
             return n;
+        }
+
+        private static double round(double value, int places) {
+            if (places < 0) throw new IllegalArgumentException();
+
+            BigDecimal bd = new BigDecimal(value);
+            bd = bd.setScale(places, RoundingMode.HALF_UP);
+            return bd.doubleValue();
         }
     }
 }

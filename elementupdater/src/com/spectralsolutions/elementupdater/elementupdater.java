@@ -9,7 +9,7 @@ import com.spectralsolutions.elementupdater.storage.LocalStorageXML;
 public class elementupdater {
     public static void main(String[] args)
     {
-        UpdaterBase updater = new UpdateWithDropbox(new ActionExtractJar(),new LocalStorageXML());
+        UpdaterBase updater = new UpdateWithDropbox(new ActionExtractJar("C:\\Users\\Tius\\Documents\\GitHub\\elementupdater\\out\\artifacts\\elementupdater_jar"),new LocalStorageXML("C:\\Users\\Tius\\Documents\\GitHub\\elementupdater\\out\\artifacts\\elementupdater_jar\\version.xml"));
         //Run update with
         // [*] update action to extract a jar to the current directory
         // [*] read and write version from an XML file stored in the current directory
