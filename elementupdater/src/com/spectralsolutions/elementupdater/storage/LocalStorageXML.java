@@ -3,6 +3,11 @@ package com.spectralsolutions.elementupdater.storage;
 import com.spectralsolutions.elementupdater.common.ILocalStorage;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
 import org.w3c.dom.Document;
 
 import java.io.File;
@@ -82,10 +87,20 @@ public class LocalStorageXML implements ILocalStorage {
             //optional, but recommended
             //read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
             doc.getDocumentElement().normalize();
-
             doc.getElementsByTagName("Version").item(0).setTextContent(value);
+            //write new xml out
+            TransformerFactory tf = TransformerFactory.newInstance();
+            Transformer t = tf.newTransformer();
+            DOMSource source = new DOMSource(doc);
+            StreamResult result = new StreamResult(xmlfile);
+            t.transform(source, result);
 
-        }catch(Exception ex){}
+            success = true;
+
+        }catch(Exception ex)
+        {
+            ex.printStackTrace();
+        }
         return success;
     }
     
@@ -100,8 +115,8 @@ public class LocalStorageXML implements ILocalStorage {
             //optional, but recommended
             //read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
             doc.getDocumentElement().normalize();
-
             doc.getElementsByTagName("Version").item(0).setTextContent(value);
+            success = true;
 
         }catch(Exception ex){}
         return success;

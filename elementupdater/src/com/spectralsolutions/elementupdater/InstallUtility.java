@@ -12,6 +12,7 @@ import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.nio.file.Paths;
 
 /**
  * Created by Tius on 9/25/2016.
@@ -113,10 +114,19 @@ public class InstallUtility {
             java.util.Enumeration enumEntries = jar.entries();
             while (enumEntries.hasMoreElements()) {
                 java.util.jar.JarEntry file = (java.util.jar.JarEntry) enumEntries.nextElement();
-                java.io.File f = new java.io.File(installDirectory + java.io.File.separator + file.getName());
+
+                java.io.File f = new java.io.File(installDirectory,file.getName());
                 System.out.println(String.format("Extracting %s", f.getName()));//might be worth seperating logging logic like this
                 if (file.isDirectory()) { // if its a directory, create it
-                    f.getParentFile().mkdirs();
+
+                    if(!f.mkdirs())
+                    {
+                        if(!f.exists())
+                        {
+                            return false;
+                        }
+                    }
+
                     continue;
                 }
                 try (java.io.InputStream is = jar.getInputStream(file); java.io.FileOutputStream fos = new FileOutputStream(f, false)) {

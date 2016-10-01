@@ -82,5 +82,5 @@ public class UpdateWithDropbox extends UpdaterBase implements IProgressCallback{
     public void UpdateFailureHandler(String message) {
         System.out.println(String.format("Update failed: %s",message));
     }
-    
+
 }
