@@ -14,10 +14,11 @@ public interface IUpdateAction {
      * @return UpdateActionResult - Did the action succeed and a message result
      */
     UpdateActionResult Run(UpdateArgs args, ILocalStorage storage);
+    UpdateActionResult Run(UpdateArgs args, ILocalStorage storage, IProgressCallback progress);
 
     /**
      * Description: Set the local version variable
      */
     //Can read and write local variables to action to an action
-    void SetLocalVersion(String version);
+    void SetLocalVersion(String version, ILocalStorage storage);
 }
