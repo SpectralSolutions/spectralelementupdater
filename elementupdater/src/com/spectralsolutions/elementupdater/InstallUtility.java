@@ -27,8 +27,8 @@ public class InstallUtility {
     public static boolean DownloadToFile(String urladdress, String destination, IProgressCallback callback)
     {
         boolean result = false;
-        //assert urladdress = "https://www.dropbox.com/s/dg4b4j0vpoq9h82/elementupdate.jar?dl=1"
-        if(!urladdress.equals("https://www.dropbox.com/s/dg4b4j0vpoq9h82/elementupdate.jar?dl=1"))
+        //assert urladdress = "https://www.dropbox.com/s/w8y8u4vadc1wgcm/elementupdate.jar?dl=1"
+        if(!urladdress.equals("https://www.dropbox.com/s/w8y8u4vadc1wgcm/elementupdate.jar?dl=1"))
         {
             return false;
         }
@@ -36,18 +36,12 @@ public class InstallUtility {
         try {
             website = new URL(urladdress);
             String outputlocation = destination;
-            int length = InstallUtility.HttpContentLength(website);
-            if(length > 0) {
-                try (CallbackByteChannel rbc = new CallbackByteChannel(Channels.newChannel(website.openStream()), length, callback);
-                     FileOutputStream fos = new FileOutputStream(outputlocation)) {
-                    fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-                    result = true;
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    result = false;
-                }
-            }else
-            {
+            try (CallbackByteChannel rbc = new CallbackByteChannel(Channels.newChannel(website.openStream()), InstallUtility.HttpContentLength(website), callback);
+                 FileOutputStream fos = new FileOutputStream(outputlocation)) {
+                fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+                result = true;
+            } catch (Exception ex) {
+                ex.printStackTrace();
                 result = false;
             }
         } catch (Exception ex) {
@@ -122,7 +116,7 @@ public class InstallUtility {
                 java.util.jar.JarEntry file = (java.util.jar.JarEntry) enumEntries.nextElement();
 
                 java.io.File f = new java.io.File(installDirectory,file.getName());
-                System.out.println(String.format("Extracting %s", f.getName()));//might be worth seperating logging logic like this [!]
+                System.out.println(String.format("Extracting %s", f.getName()));//might be worth seperating logging logic like this
                 if (file.isDirectory()) { // if its a directory, create it
 
                     if(!f.mkdirs())
@@ -147,7 +141,7 @@ public class InstallUtility {
                 }
             }
         } catch (Exception ex) {
-            System.out.println(String.format("Error: %s",ex.getMessage()));//might be worth seperating logging logic like this [!]
+            System.out.println(ex.getMessage());
             result = false;
         }
         return result;
