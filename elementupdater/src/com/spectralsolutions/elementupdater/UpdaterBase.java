@@ -89,14 +89,8 @@ public abstract class UpdaterBase extends UpdateEventNotifier implements IUpdate
 
         double currentProgress = progress;
         if(previousProgress != currentProgress) {
-            if((currentProgress % 4) == 0) {
-                //System.out.println();
-                String s = "|";
-                String loadingbar = new String(new char[((int) progress / 4)]).replace("\0", s);
-                System.out.println(String.format("[%1$-25s %2$1s", loadingbar, "]"));
-                //System.out.println(String.format("Download progress: %.0f %%", progress));
-                previousProgress = progress;
-            }
+            System.out.println(String.format("Download progress: %.0f %%", progress));
+            previousProgress = progress;
         }
     }
 

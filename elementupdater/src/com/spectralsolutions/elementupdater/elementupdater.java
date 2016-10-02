@@ -9,16 +9,12 @@ import com.spectralsolutions.elementupdater.storage.LocalStorageXML;
 public class elementupdater {
     public static void main(String[] args)
     {
-        System.out.println("Checking for updates...");
-        UpdaterBase updater = new UpdateWithDropbox(new ActionExtractJar(),new LocalStorageXML());
+        UpdaterBase updater = new UpdateWithDropbox(new ActionExtractJar("C:\\Users\\Tius\\Documents\\GitHub\\elementupdater\\out\\artifacts\\elementupdater_jar"),new LocalStorageXML("C:\\Users\\Tius\\Documents\\GitHub\\elementupdater\\out\\artifacts\\elementupdater_jar\\version.xml"));
         //Run update with
         // [*] update action to extract a jar to the current directory
         // [*] read and write version from an XML file stored in the current directory
         // [*] retrieve the update arguments using a Dropbox text file
         UpdateFactory uf = new UpdateFactory(updater);//Proxy wrapper for convenience and to hide unneeded methods
         uf.CheckUpdate();
-        try {
-            System.in.read();
-        }catch (Exception ex){}
     }
 }
