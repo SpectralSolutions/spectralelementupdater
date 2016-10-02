@@ -70,7 +70,7 @@ public class UpdateWithDropbox extends UpdaterBase implements IProgressCallback{
 
     @Override
     public void UpdateDetectedHandler(UpdateArgs args) {
-        System.out.println(String.format("New update detected for version: %s",args.ServerVersion));
+        System.out.println(String.format("New update detected for version: %s\n",args.ServerVersion));
     }
 
     @Override

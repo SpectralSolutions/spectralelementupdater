@@ -24,7 +24,7 @@ public class ActionExtractJar implements IUpdateAction {
 
     public ActionExtractJar()
     {
-        this.InstallerLocation = "user.dir";//Current working directory
+        this.InstallerLocation = new File(".").getAbsolutePath();//Current working directory
     }
 
     //Might be worth returning a result object in case errors are encountered
@@ -69,7 +69,7 @@ public class ActionExtractJar implements IUpdateAction {
         {
             String newversion = args.ServerVersion;
             String updatepackageurl = args.UrlUpdatePackage;
-            String[] errors = new String[]{"Install path is broken or missing", "Update package failed to download", "Failed to extract action package", "Had a problem updating version subkey"};
+            String[] errors = new String[]{"Install path is broken or missing", "Update package failed to download", "Failed to extract update package", "Had a problem updating version subkey"};
             String errormessage = "";
             // = InstallerLocation + File.separator + "updatepackage.jar";//how to handle situations where path ends  added?
             //if(unix)
