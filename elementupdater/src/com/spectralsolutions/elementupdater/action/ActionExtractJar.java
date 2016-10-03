@@ -17,6 +17,12 @@ import java.nio.file.Paths;
 public class ActionExtractJar implements IUpdateAction {
 
     String InstallerLocation = "";
+    IProgressCallback callback = null;
+    public ActionExtractJar(String installerlocation, IProgressCallback callback)
+    {
+        this.InstallerLocation = installerlocation;
+    }
+
     public ActionExtractJar(String installerlocation)
     {
         this.InstallerLocation = installerlocation;
@@ -32,14 +38,22 @@ public class ActionExtractJar implements IUpdateAction {
     public UpdateActionResult Run(UpdateArgs args, ILocalStorage storage) {
         if(args != null)
         {
-            String newversion = args.ServerVersion;
+            String newversion = args.LatestVersion;
             String updatepackageurl = args.UrlUpdatePackage;
             String[] errors = new String[]{"Install path is broken or missing", "Update package failed to download", "Failed to extract action package", "Had a problem updating version subkey"};
             String errormessage = "";
 
             String updatepackage = InstallerLocation + File.separator + "updatepackage.jar";
-
-            if (InstallUtility.DownloadToFile(updatepackageurl,updatepackage)) {
+            boolean downloadsuccess;
+            if(this.callback != null)
+            {
+                downloadsuccess = InstallUtility.DownloadToFile(updatepackageurl,updatepackage,this.callback);
+            }
+            else
+            {
+                downloadsuccess = InstallUtility.DownloadToFile(updatepackageurl,updatepackage);
+            }
+            if (downloadsuccess) {
                 //Unpack downloaded package to installer location
                 if (InstallUtility.ExtractJarFile(updatepackage, InstallerLocation)) {
                     //Update value of local installed version
@@ -67,7 +81,7 @@ public class ActionExtractJar implements IUpdateAction {
     public UpdateActionResult Run(UpdateArgs args, ILocalStorage storage, IProgressCallback callback) {
         if(args != null)
         {
-            String newversion = args.ServerVersion;
+            String newversion = args.LatestVersion;
             String updatepackageurl = args.UrlUpdatePackage;
             String[] errors = new String[]{"Install path is broken or missing", "Update package failed to download", "Failed to extract action package", "Had a problem updating version subkey"};
             String errormessage = "";

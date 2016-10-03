@@ -7,8 +7,8 @@ import com.spectralsolutions.elementupdater.objects.UpdateArgs;
  */
 public interface IUpdateDetectedListener {
     /**
-     * Description: A method signature for handling the UpdateDetected event
-     * @param args
+     * Description: Respond when an update is successfully detected
+     * @param args provides further information on the detected update arguments
      */
     void UpdateDetectedHandler(UpdateArgs args);
 }

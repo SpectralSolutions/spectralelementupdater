@@ -1,13 +1,8 @@
 package com.spectralsolutions.elementupdater;
 
-import com.spectralsolutions.elementupdater.InstallUtility;
 import com.spectralsolutions.elementupdater.common.*;
 import com.spectralsolutions.elementupdater.objects.UpdateActionResult;
 import com.spectralsolutions.elementupdater.objects.UpdateArgs;
-import com.spectralsolutions.elementupdater.UpdaterBase;
-
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 /**
  * Created by Tius on 9/25/2016.
@@ -16,13 +11,18 @@ import java.math.RoundingMode;
  * and is very quick to implement
  *
  */
-public class UpdateWithDropbox extends UpdaterBase implements IProgressCallback{
+public class UpdateWithDropbox extends UpdaterBase {
     private static double previousProgress = 0;
     //Url to a text file formatted with the current action information
     private final String dropboxurl = "https://www.dropbox.com/s/onvsnt5jvubkucb/action.txt?dl=1";
     public UpdateWithDropbox(IUpdateAction updateaction, ILocalStorage storage)
     {
         super(updateaction,storage);
+    }
+
+    public UpdateWithDropbox(IUpdateAction updateaction, ILocalStorage storage, IUpdateEventsListener listener)
+    {
+        super(updateaction,storage,listener);
     }
 
     @Override
@@ -52,12 +52,12 @@ public class UpdateWithDropbox extends UpdaterBase implements IProgressCallback{
             //exit
         }
         //simple non equality check
-        if(!ua.ServerVersion.equals(localversion))
+        if(!ua.LatestVersion.equals(localversion))
         {
             //trigger update detected event
             this.UpdateDetected(this.GetUpdateArgs());
             //Run update
-            UpdateActionResult uar = this.updateaction.Run(this.GetUpdateArgs(),this.storage, this);
+            UpdateActionResult uar = this.updateaction.Run(this.GetUpdateArgs(),this.storage);
             if(uar.Success)
             {
                 this.UpdateSuccess();
@@ -70,7 +70,7 @@ public class UpdateWithDropbox extends UpdaterBase implements IProgressCallback{
 
     @Override
     public void UpdateDetectedHandler(UpdateArgs args) {
-        System.out.println(String.format("New update detected for version: %s",args.ServerVersion));
+        System.out.println(String.format("New update detected for version: %s",args.LatestVersion));
     }
 
     @Override

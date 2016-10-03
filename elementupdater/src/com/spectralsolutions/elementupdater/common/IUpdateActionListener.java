@@ -8,6 +8,13 @@ package com.spectralsolutions.elementupdater.common;
  * when installing an action
  */
 public interface IUpdateActionListener {
+    /**
+     * Description: Respond when the update is installed successfully
+     */
     void UpdateSuccessHandler();
+    /**
+     * Description: Respond when the update isn't installed successfully.
+     * @param message A simple message describing the error
+     */
     void UpdateFailureHandler(String message);
 }

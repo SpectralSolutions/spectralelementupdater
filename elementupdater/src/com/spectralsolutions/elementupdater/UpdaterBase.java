@@ -1,6 +1,5 @@
 package com.spectralsolutions.elementupdater;
 
-import com.spectralsolutions.elementupdater.UpdateEventNotifier;
 import com.spectralsolutions.elementupdater.common.*;
 import com.spectralsolutions.elementupdater.objects.UpdateArgs;
 
@@ -17,6 +16,12 @@ public abstract class UpdaterBase extends UpdateEventNotifier implements IUpdate
         this.updateaction = updateaction;
         this.SetStorage(storage);
         this.AddListener(this);
+    }
+    public UpdaterBase(IUpdateAction updateaction, ILocalStorage storage, IUpdateEventsListener listener)
+    {
+        this.updateaction = updateaction;
+        this.SetStorage(storage);
+        this.AddListener(listener);
     }
 
     @Override
@@ -60,7 +65,7 @@ public abstract class UpdaterBase extends UpdateEventNotifier implements IUpdate
         UpdateArgs ua = this.GetUpdateArgs();
         String localversion = this.GetLocalVersion();
         //simple non equality check
-        if(!ua.ServerVersion.equals(localversion))
+        if(!ua.LatestVersion.equals(localversion))
         {
             //trigger update detected event
             this.UpdateDetected(this.GetUpdateArgs());
