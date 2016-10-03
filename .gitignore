@@ -303,8 +303,7 @@ $RECYCLE.BIN/
 *.lnk
 *.class
 *.class
-out/production/elementupdater/com/spectralsolutions/elementupdater/InstallUtility.class
-elementupdater/src/META-INF/MANIFEST.MF
-*.class
-out/production/elementupdater/com/spectralsolutions/elementupdater/InstallUtility.class
-out/production/elementupdater/com/spectralsolutions/elementupdater/InstallUtility.class
+
+# Custom
+out/
+
