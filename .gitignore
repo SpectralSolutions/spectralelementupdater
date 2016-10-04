@@ -308,3 +308,4 @@ $RECYCLE.BIN/
 out/
 
 elementupdater/src/META-INF/MANIFEST.MF
+elementupdater/target/
