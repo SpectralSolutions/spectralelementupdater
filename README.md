@@ -16,6 +16,8 @@ uf.CheckUpdate();
 ```
 
 ##Respond to update events
+Custom code can be written to respond triggered update events by extending the IUpdateEventsListener interface and passing it to the ActionExtractJar constructor.
+
 ```java
 import com.spectralsolutions.elementupdater;
 
@@ -46,4 +48,25 @@ public class UpdateEventsResponder implements IUpdateEventsListener {
         System.out.println(String.format("Updating to latest version: v %s", args.LatestVersion));
     }
 }
+```
+
+## Maven Installation
+To use elementupdater add the following repository and dependency to your pom.xml file
+```xml
+<dependency>
+    <groupId>com.spectralsolutions</groupId>
+    <artifactId>elementupdater</artifactId>
+    <version>1.0-SNAPSHOT</version>
+</dependency>
+
+<repositories>
+    <repository>
+        <id>elementupdater-mvn-repo</id>
+        <url>https://raw.github.com/spectralsolutions/elementupdater/mvn-repo/</url>
+        <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+        </snapshots>
+    </repository>
+</repositories>
 ```
