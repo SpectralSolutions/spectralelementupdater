@@ -26,11 +26,12 @@ UpdateFactory uf = new UpdateFactory(updater);
 uf.CheckUpdate();
 ```
 
-Where "UpdateEventsResponder" is a simple class that responds to the events by printing some text to the console. Swap out the calls to "println" with label.setText() as a quick and dirty GUI wire-up. 
+Where "UpdateEventsResponder" is a simple class that responds to the events by printing some text to the console. 
 ```java
 import com.spectralsolutions.elementupdater;
 import com.spectralsolutions.elementupdater.common;
 
+//Swap out the calls to "println" with label.setText() as a quick and dirty GUI
 public class UpdateEventsResponder implements IUpdateEventsListener {
     
     @Override
