@@ -53,13 +53,16 @@ public class UpdateEventsResponder implements IUpdateEventsListener {
 ## Maven Installation
 To use elementupdater add the following repository and dependency to your pom.xml file
 ```xml
+<!-- add this within your project's "dependencies" node -->
 <dependency>
     <groupId>com.spectralsolutions</groupId>
     <artifactId>elementupdater</artifactId>
     <version>1.0-SNAPSHOT</version>
 </dependency>
 
+
 <repositories>
+<!-- of course if a "repositories" node already exists just add the following repository -->
     <repository>
         <id>elementupdater-mvn-repo</id>
         <url>https://raw.github.com/spectralsolutions/elementupdater/mvn-repo/</url>
