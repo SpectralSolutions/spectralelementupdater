@@ -74,3 +74,9 @@ To use elementupdater add the following repository and dependency to your pom.xm
     </repository>
 </repositories>
 ```
+## More Information
+Check out some of the key classes below for a little more of an idea about how things work.
+* elementupdater - Runs the updater
+* updaterbase - An abstract class containing the core update functionality (Find the "callback" method for download progress updates) 
+* UpdateFactory - proxy-wrapper-factory-kind-of class for running an updater class with additional options
+* InstallUtility - A collection of common static methods for installation
