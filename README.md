@@ -46,7 +46,7 @@ public class UpdateEventsResponder implements IUpdateEventsListener {
 
     @Override
     public void UpdateDetectedHandler(UpdateArgs args) {
-        System.out.println(String.format("Updating to latest version: v %s", args.LatestVersion));
+        System.out.println(String.format("Please wait... Updating to latest version: v %s", args.LatestVersion));
     }
 }
 ```
