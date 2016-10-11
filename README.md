@@ -16,7 +16,7 @@ uf.CheckUpdate();
 ```
 
 ##Respond to update events
-Custom code can be written to respond triggered update events by extending the IUpdateEventsListener interface and passing it to the ActionExtractJar constructor.
+Custom code can be written to respond to triggered update events - making it simple to pair a GUI with the updater. Extend the IUpdateEventsListener interface and pass it as an argument to the ActionExtractJar constructor.
 
 ```java
 import com.spectralsolutions.elementupdater;
@@ -26,7 +26,7 @@ UpdateFactory uf = new UpdateFactory(updater);
 uf.CheckUpdate();
 ```
 
-Where "UpdateEventsResponder" is a simple class that responds to the events by printing some text to the console
+Where "UpdateEventsResponder" is a simple class that responds to the events by printing some text to the console. Swap out the calls to "println" with label.setText() as a quick and dirty GUI wire-up. 
 ```java
 import com.spectralsolutions.elementupdater;
 import com.spectralsolutions.elementupdater.common;
