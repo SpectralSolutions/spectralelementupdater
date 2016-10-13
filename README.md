@@ -16,6 +16,8 @@ uf.CheckUpdate();
 ```
 
 ##Respond to update events
+Custom code can be written to respond to triggered update events - making it simple to pair a GUI with the updater. Extend the IUpdateEventsListener interface and pass it as an argument to the ActionExtractJar constructor.
+
 ```java
 import com.spectralsolutions.elementupdater;
 
@@ -24,11 +26,12 @@ UpdateFactory uf = new UpdateFactory(updater);
 uf.CheckUpdate();
 ```
 
-Where "UpdateEventsResponder" is a simple class that responds to the events by printing some text to the console
+Where "UpdateEventsResponder" is a simple class that responds to the events by printing some text to the console. 
 ```java
 import com.spectralsolutions.elementupdater;
 import com.spectralsolutions.elementupdater.common;
 
+//Swap out the calls to "println" with label.setText() as a quick and dirty GUI
 public class UpdateEventsResponder implements IUpdateEventsListener {
     
     @Override
@@ -43,7 +46,37 @@ public class UpdateEventsResponder implements IUpdateEventsListener {
 
     @Override
     public void UpdateDetectedHandler(UpdateArgs args) {
-        System.out.println(String.format("Updating to latest version: v %s", args.LatestVersion));
+        System.out.println(String.format("Please wait... Updating to latest version: v %s", args.LatestVersion));
     }
 }
 ```
+
+## Maven Installation
+To use elementupdater add the following repository and dependency to your pom.xml file
+```xml
+<!-- add this within your project's "dependencies" node -->
+<dependency>
+    <groupId>com.spectralsolutions</groupId>
+    <artifactId>elementupdater</artifactId>
+    <version>1.0-SNAPSHOT</version>
+</dependency>
+
+
+<repositories>
+<!-- of course if a "repositories" node already exists just add the following repository -->
+    <repository>
+        <id>elementupdater-mvn-repo</id>
+        <url>https://raw.github.com/spectralsolutions/elementupdater/mvn-repo/</url>
+        <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+        </snapshots>
+    </repository>
+</repositories>
+```
+## More Information
+Check out some of the key classes below for a little more of an idea about how things work.
+* elementupdater - Runs the updater
+* updaterbase - An abstract class containing the core update functionality (Find the "callback" method for download progress updates) 
+* UpdateFactory - proxy-wrapper-factory-kind-of class for running an updater class with additional options
+* InstallUtility - A collection of common static methods for installation
