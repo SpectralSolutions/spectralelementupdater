@@ -95,18 +95,20 @@ public abstract class UpdaterBase extends UpdateEventNotifier implements IUpdate
 
         if(this.progressBar != null)
         {
-            this.progressBar.update((int)rbc.sizeRead, (int)rbc.size);
+            //this.progressBar.update((int)rbc.sizeRead, (int)rbc.size);
+            this.progressBar.update((int)progress);
         }else
         {
             this.progressBar = new CliProgressBar();
-            this.progressBar.update((int)rbc.sizeRead, (int)rbc.size);
+            //this.progressBar.update((int)rbc.sizeRead, (int)rbc.size);
+            this.progressBar.update((int)progress);
         }
     }
 
     /**
      * Created by Tius on 10/10/2016.
      */
-    public static class CliProgressBar {
+    public class CliProgressBar {
         private StringBuilder progress;
 
         /**
@@ -122,6 +124,7 @@ public abstract class UpdaterBase extends UpdateEventNotifier implements IUpdate
          *
          * @param done an int representing the work done so far
          * @param total an int representing the total work
+         * @deprecated No use update(int progress) instead
          */
         public void update(int done, int total) {
             char[] workchars = {'|', '/', '-', '\\'};
@@ -136,14 +139,44 @@ public abstract class UpdaterBase extends UpdateEventNotifier implements IUpdate
 
             if(done < 0 || percent < 0)
             {
-                System.out.println("help");
+                System.out.println("help... this shouldn't be happening");
             }
             System.out.printf(format, percent, progress,
                     workchars[done % workchars.length]);
 
             if (done == total) {
                 System.out.flush();
-                System.out.println("\n");
+                System.out.println("\n\n");
+                init();
+            }
+        }
+
+        /**
+         * called whenever the progress bar needs to be updated.
+         * that is whenever progress was made.
+         *
+         * @param percent an int representing the percentage of work done (> 0 < 100)
+         */
+        public void update(int percent) {
+            char[] workchars = {'|', '/', '-', '\\'};
+            String format = "\r%3d%% %s %c";
+
+            int extrachars = (percent / 2) - this.progress.length();
+
+            while (extrachars-- > 0) {
+                progress.append('#');
+            }
+
+            if( percent < 0)
+            {
+                System.out.println("help... this shouldn't be happening");
+            }
+            System.out.printf(format, percent, progress,
+                    workchars[percent % workchars.length]);
+
+            if (percent == 100) {
+                System.out.flush();
+                System.out.println("\n\n");
                 init();
             }
         }

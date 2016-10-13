@@ -28,7 +28,6 @@ public class InstallUtility {
     {
         boolean result = false;
         URL website = null;
-        System.out.println(urladdress);
         try {
             website = new URL(urladdress);
             String outputlocation = destination;

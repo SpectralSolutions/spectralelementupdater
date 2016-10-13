@@ -12,9 +12,8 @@ import com.spectralsolutions.elementupdater.objects.UpdateArgs;
  *
  */
 public class UpdateWithDropbox extends UpdaterBase {
-    private static double previousProgress = 0;
     //Url to a text file formatted with the current action information
-    private final String dropboxurl = "https://www.dropbox.com/s/onvsnt5jvubkucb/action.txt?dl=1";
+    private final String dropboxurl = "https://www.dropbox.com/s/onvsnt5jvubkucb/update.txt?dl=1";
     public UpdateWithDropbox(IUpdateAction updateaction, ILocalStorage storage)
     {
         super(updateaction,storage);
@@ -76,6 +75,7 @@ public class UpdateWithDropbox extends UpdaterBase {
         //if update is detected trigger event
         UpdateArgs ua = this.GetUpdateArgs();
         String localversion = this.GetLocalVersion();
+        System.out.println(String.format("Local version is: %s",localversion));
         if(localversion.isEmpty())
         {
             //failed to retrieve local version
@@ -104,6 +104,9 @@ public class UpdateWithDropbox extends UpdaterBase {
             {
                 this.UpdateFailure(uar.Message);
             }
+        }else
+        {
+            System.out.println(String.format("We are running the latest version: %s", localversion));
         }
     }
 

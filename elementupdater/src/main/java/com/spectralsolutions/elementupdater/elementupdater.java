@@ -17,5 +17,6 @@ public class elementupdater {
         UpdateFactory uf = new UpdateFactory(updater);//Proxy wrapper for convenience and to hide unneeded methods
         uf.SetDefaultProgressCallback(true);
         uf.CheckUpdate();
+        System.exit(0);
     }
 }
