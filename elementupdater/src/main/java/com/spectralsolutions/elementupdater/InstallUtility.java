@@ -27,12 +27,8 @@ public class InstallUtility {
     public static boolean DownloadToFile(String urladdress, String destination, IProgressCallback callback)
     {
         boolean result = false;
-        //assert urladdress = "https://www.dropbox.com/s/w8y8u4vadc1wgcm/elementupdate.jar?dl=1"
-        if(!urladdress.equals("https://www.dropbox.com/s/w8y8u4vadc1wgcm/elementupdate.jar?dl=1"))
-        {
-            return false;
-        }
         URL website = null;
+        System.out.println(urladdress);
         try {
             website = new URL(urladdress);
             String outputlocation = destination;
@@ -55,11 +51,6 @@ public class InstallUtility {
     public static boolean DownloadToFile(String urladdress, String destination)
     {
         boolean result = false;
-        //assert urladdress = "https://www.dropbox.com/s/w8y8u4vadc1wgcm/elementupdate.jar?dl=1"
-        if(!urladdress.equals("https://www.dropbox.com/s/w8y8u4vadc1wgcm/elementupdate.jar?dl=1"))
-        {
-            return false;
-        }
         URL website = null;
         try {
             website = new URL(urladdress);

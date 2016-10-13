@@ -42,7 +42,10 @@ public class ActionExtractJar implements IUpdateAction {
             String updatepackageurl = args.UrlUpdatePackage;
             String[] errors = new String[]{"Install path is broken or missing", "Update package failed to download", "Failed to extract action package", "Had a problem updating version subkey"};
             String errormessage = "";
-
+            if(InstallerLocation.equals("user.dir"))
+            {
+                InstallerLocation = System.getProperty("user.dir");
+            }
             String updatepackage = InstallerLocation + File.separator + "updatepackage.jar";
             boolean downloadsuccess;
             if(this.callback != null)

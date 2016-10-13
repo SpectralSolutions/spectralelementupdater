@@ -26,4 +26,5 @@ public interface IUpdateDetectable extends IUpdateDetectedListener, ILocalStorag
      *
      */
     void CheckUpdate();
+    void CheckUpdate(boolean useDefaultCallbackProgress);
 }

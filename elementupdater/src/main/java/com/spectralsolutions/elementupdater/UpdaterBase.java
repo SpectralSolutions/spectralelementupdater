@@ -10,6 +10,7 @@ public abstract class UpdaterBase extends UpdateEventNotifier implements IUpdate
     protected ILocalStorage storage;
     protected final IUpdateAction updateaction;
     private double previousProgress;
+    private CliProgressBar progressBar = null;
 
     public UpdaterBase(IUpdateAction updateaction, ILocalStorage storage)
     {
@@ -92,11 +93,63 @@ public abstract class UpdaterBase extends UpdateEventNotifier implements IUpdate
     @Override
     public void callback(InstallUtility.CallbackByteChannel rbc, double progress) {
 
-        double currentProgress = progress;
-        if(previousProgress != currentProgress) {
-            System.out.println(String.format("Download progress: %.0f %%", progress));
-            previousProgress = progress;
+        if(this.progressBar != null)
+        {
+            this.progressBar.update((int)rbc.sizeRead, (int)rbc.size);
+        }else
+        {
+            this.progressBar = new CliProgressBar();
+            this.progressBar.update((int)rbc.sizeRead, (int)rbc.size);
         }
     }
 
+    /**
+     * Created by Tius on 10/10/2016.
+     */
+    public static class CliProgressBar {
+        private StringBuilder progress;
+
+        /**
+         * initialize progress bar properties.
+         */
+        public CliProgressBar() {
+            init();
+        }
+
+        /**
+         * called whenever the progress bar needs to be updated.
+         * that is whenever progress was made.
+         *
+         * @param done an int representing the work done so far
+         * @param total an int representing the total work
+         */
+        public void update(int done, int total) {
+            char[] workchars = {'|', '/', '-', '\\'};
+            String format = "\r%3d%% %s %c";
+
+            int percent = (++done / total) * 100;
+            int extrachars = (percent / 2) - this.progress.length();
+
+            while (extrachars-- > 0) {
+                progress.append('#');
+            }
+
+            if(done < 0 || percent < 0)
+            {
+                System.out.println("help");
+            }
+            System.out.printf(format, percent, progress,
+                    workchars[done % workchars.length]);
+
+            if (done == total) {
+                System.out.flush();
+                System.out.println("\n");
+                init();
+            }
+        }
+
+        private void init() {
+            this.progress = new StringBuilder(60);
+        }
+    }
 }

@@ -49,14 +49,14 @@
                     <branch>refs/heads/mvn-repo</branch>                       <!-- remote branch name -->
                     <includes><include>**/*</include></includes>
                     <repositoryName>elementupdater</repositoryName>      <!-- github repo name -->
-                    <repositoryOwner>ReeceC@spectral-solutions.com</repositoryOwner>    <!-- github username  -->
+                    <repositoryOwner>SpectralSolutions</repositoryOwner>    <!-- github username  -->
                 </configuration>
                 <executions>
                     <execution>
                         <goals>
                             <goal>site</goal>
                         </goals>
-                        <phase>site</phase>
+                        <phase>deploy</phase>
                     </execution>
                 </executions>
             </plugin>

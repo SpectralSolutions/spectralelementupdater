@@ -8,14 +8,26 @@ import com.spectralsolutions.elementupdater.common.IUpdateEventsListener;
  */
 public class UpdateFactory {
     private final UpdaterBase updater;
+    private boolean usedefaultprogresscallback;
     public UpdateFactory(UpdaterBase updater)
     {
         this.updater = updater;
     }
 
+    public void SetDefaultProgressCallback(boolean enable)
+    {
+        this.usedefaultprogresscallback = enable;
+    }
+
     public void CheckUpdate()
     {
-        this.updater.CheckUpdate();
+        if(this.usedefaultprogresscallback)
+        {
+            this.updater.CheckUpdate(true);
+
+        }else {
+            this.updater.CheckUpdate();
+        }
     }
 
     public void AddEventsListener(IUpdateEventsListener callback)

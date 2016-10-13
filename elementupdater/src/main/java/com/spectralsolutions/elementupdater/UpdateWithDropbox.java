@@ -68,6 +68,45 @@ public class UpdateWithDropbox extends UpdaterBase {
         }
     }
 
+    /**
+     * Description: Logic for comparing local version with server version to determine if update is needed
+     * Triggers update event when an update is detected
+     */
+    public void CheckUpdate(boolean UseDefaultProgressCallback) {
+        //if update is detected trigger event
+        UpdateArgs ua = this.GetUpdateArgs();
+        String localversion = this.GetLocalVersion();
+        if(localversion.isEmpty())
+        {
+            //failed to retrieve local version
+            //trigger update failure passing error message
+            this.UpdateFailure("Could not retrieve the local version value.");
+            return;
+            //exit
+        }
+        //simple non equality check
+        if(!ua.LatestVersion.equals(localversion))
+        {
+            //trigger update detected event
+            this.UpdateDetected(this.GetUpdateArgs());
+            //Run update
+            UpdateActionResult uar;
+            if(!UseDefaultProgressCallback) {
+                uar = this.updateaction.Run(this.GetUpdateArgs(), this.storage);
+            }else
+            {
+                uar = this.updateaction.Run(this.GetUpdateArgs(), this.storage, this);
+            }
+            if(uar.Success)
+            {
+                this.UpdateSuccess();
+            }else
+            {
+                this.UpdateFailure(uar.Message);
+            }
+        }
+    }
+
     @Override
     public void UpdateDetectedHandler(UpdateArgs args) {
         System.out.println(String.format("New update detected for version: %s",args.LatestVersion));
