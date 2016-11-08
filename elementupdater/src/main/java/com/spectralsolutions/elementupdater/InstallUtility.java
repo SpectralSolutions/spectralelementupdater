@@ -12,18 +12,26 @@ import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
-import java.nio.file.Paths;
 
 /**
  * Created by Tius on 9/25/2016.
  *
  * Description:
- * A helper class that contains functionality common to action operations
+ * A helper class that contains functionality common to update operations
  *
  */
 public class InstallUtility {
 
     //Overload to accept a callback for showing progress to the user
+
+    /**
+     * Description: Downloads the resource at a given url and saves it to a file on the local disk
+     *
+     * @param urladdress a string properly formatted url (http://)
+     * @param destination a string full path to a destination on the local drive including the name and extension
+     * @param callback the callback method to update download progress (implements IProgressCallback)
+     * @return
+     */
     public static boolean DownloadToFile(String urladdress, String destination, IProgressCallback callback)
     {
         boolean result = false;
@@ -36,7 +44,7 @@ public class InstallUtility {
                 fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
                 result = true;
             } catch (Exception ex) {
-                ex.printStackTrace();
+                System.out.println(ex.getMessage());
                 result = false;
             }
         } catch (Exception ex) {
@@ -47,6 +55,13 @@ public class InstallUtility {
         return result;
     }
 
+    /**
+     * Description: Downloads the resource at a given url and saves it to a file on the local disk
+     *
+     * @param urladdress a string properly formatted url (http://)
+     * @param destination a string full path to a destination on the local drive including the name and extension
+     * @return success: boolean value whether the download completed without errors
+     */
     public static boolean DownloadToFile(String urladdress, String destination)
     {
         boolean result = false;
@@ -59,9 +74,11 @@ public class InstallUtility {
                 fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
                 result = true;
             } catch (Exception ex) {
+                System.out.println(ex.getMessage());
                 result = false;
             }
         } catch (Exception ex) {
+            System.out.println(ex.getMessage());
         }
         if (website.equals(null)) {
             result = false;
@@ -69,6 +86,12 @@ public class InstallUtility {
         return result;
     }
 
+    /**
+     * Description: Returns the size of a resource at a given URL by querying the header response
+     *
+     * @param url a string properly formatted url (http://)
+     * @return int the value of the HTTP header ContentLength
+     */
     private static int HttpContentLength(URL url)
     {
         HttpURLConnection connection;
@@ -81,6 +104,12 @@ public class InstallUtility {
         return contentLength;
     }
 
+    /**
+     * Description: Returns the resource at a URL as a String
+     *
+     * @param urladdress a string properly formatted url (http://)
+     * @return String the text content of the web resource
+     */
     public static String DownloadToString(String urladdress)
     {
         String content = "";

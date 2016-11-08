@@ -105,6 +105,7 @@ public abstract class UpdaterBase extends UpdateEventNotifier implements IUpdate
         }
     }
 
+    public abstract void InstallUpdate(UpdateArgs ua);
     /**
      * Created by Tius on 10/10/2016.
      */

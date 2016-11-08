@@ -20,7 +20,14 @@ public class ActionExtractJar implements IUpdateAction {
     IProgressCallback callback = null;
     public ActionExtractJar(String installerlocation, IProgressCallback callback)
     {
-        this.InstallerLocation = installerlocation;
+        if(!(installerlocation.equals("") || installerlocation.equals("user.dir")))
+        {
+            this.InstallerLocation = installerlocation;
+        }else
+        {
+            this.InstallerLocation = System.getProperty("user.dir");
+        }
+
     }
 
     public ActionExtractJar(String installerlocation)

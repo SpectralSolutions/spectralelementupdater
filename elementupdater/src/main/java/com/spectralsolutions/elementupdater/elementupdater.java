@@ -1,15 +1,18 @@
 package com.spectralsolutions.elementupdater;
 
 import com.spectralsolutions.elementupdater.action.ActionExtractJar;
+import com.spectralsolutions.elementupdater.common.IUpdateEventsListener;
+import com.spectralsolutions.elementupdater.objects.UpdateArgs;
 import com.spectralsolutions.elementupdater.storage.LocalStorageXML;
 
 /**
  * Created by Tius on 9/29/2016.
  */
-public class elementupdater {
+public class elementupdater  {
+    private static updaterTest test = new updaterTest();
     public static void main(String[] args)
     {
-        UpdaterBase updater = new UpdateWithDropbox(new ActionExtractJar(),new LocalStorageXML());
+        UpdaterBase updater = new UpdateWithDropbox(new ActionExtractJar(),new LocalStorageXML(),test);
         //Run update with
         // [*] update action to extract a jar to the current directory
         // [*] read and write version from an XML file stored in the current directory
@@ -17,6 +20,31 @@ public class elementupdater {
         UpdateFactory uf = new UpdateFactory(updater);//Proxy wrapper for convenience and to hide unneeded methods
         uf.SetDefaultProgressCallback(true);
         uf.CheckUpdate();
-        System.exit(0);
+    }
+
+    public static class updaterTest implements IUpdateEventsListener{
+
+        @Override
+        public void UpdateSuccessHandler()  {
+            System.out.println("Sick.");
+        }
+
+        @Override
+        public void UpdateFailureHandler(String message) {
+            System.out.println("Shit. " + message   );
+        }
+
+        @Override
+        public void UpdateDetectedHandler(UpdateArgs args) {
+            try{
+                System.out.println("Would you like to install ze update?");
+                System.in.read();
+                args.BeginUpdate();
+
+            }catch (Exception ex)
+            {
+
+            }
+        }
     }
 }
