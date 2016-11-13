@@ -27,6 +27,7 @@ public class ActionExtractJar implements IUpdateAction {
         {
             this.InstallerLocation = System.getProperty("user.dir");
         }
+        this.callback = callback;
 
     }
 
