@@ -46,5 +46,10 @@ public class elementupdater  {
 
             }
         }
+
+        @Override
+        public void UpdateUpToDateHandler(String currentVersion) {
+            System.out.println("We are up to date!");
+        }
     }
 }

@@ -35,4 +35,10 @@ public abstract class UpdateEventNotifier {
         for (IUpdateEventsListener l : listeners)
             l.UpdateFailureHandler(message);
     }
+
+    protected void UpToDate(String currentVersion)
+    {
+        for(IUpdateEventsListener l : listeners)
+            l.UpdateUpToDateHandler(currentVersion);
+    }
 }

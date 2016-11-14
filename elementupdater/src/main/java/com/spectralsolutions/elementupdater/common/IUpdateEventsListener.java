@@ -8,4 +8,5 @@ package com.spectralsolutions.elementupdater.common;
  *
  */
 public interface IUpdateEventsListener extends IUpdateDetectedListener, IUpdateActionListener {
+    void UpdateUpToDateHandler(String currentVersion);
 }

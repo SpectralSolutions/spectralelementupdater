@@ -61,8 +61,8 @@ public class UpdateWithDropbox extends UpdaterBase {
             this.UpdateDetected(ua);
         }else
         {
-            System.out.println(String.format("We are running the latest version: %s", localversion));
-
+            //System.out.println(String.format("We are running the latest version: %s", localversion));
+            this.UpdateUpToDateHandler(localversion);
         }
     }
 
@@ -109,4 +109,8 @@ public class UpdateWithDropbox extends UpdaterBase {
         System.out.println(String.format("Update failed: %s",message));
     }
 
+    @Override
+    public void UpdateUpToDateHandler(String currentVersion) {
+        System.out.println(String.format("We are running the latest version: %s",currentVersion));
+    }
 }
