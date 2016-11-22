@@ -10,8 +10,9 @@ package com.spectralsolutions.elementupdater.common;
 public interface IUpdateActionListener {
     /**
      * Description: Respond when the update is installed successfully
+     * @param installedVersion
      */
-    void UpdateSuccessHandler();
+    void UpdateSuccessHandler(String installedVersion);
     /**
      * Description: Respond when the update isn't installed successfully.
      * @param message A simple message describing the error

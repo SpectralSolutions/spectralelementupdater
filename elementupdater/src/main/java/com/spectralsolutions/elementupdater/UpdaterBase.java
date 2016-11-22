@@ -35,7 +35,7 @@ public abstract class UpdaterBase extends UpdateEventNotifier implements IUpdate
         return this.storage;
     }
 
-    /**
+    /***
      * Description: Makes a request to the server to query the latest action
      *
      * @return UpdateArgs
@@ -47,7 +47,7 @@ public abstract class UpdaterBase extends UpdateEventNotifier implements IUpdate
         return new UpdateArgs("1.0.0.1","http://download.com");
     }
 
-    /**
+    /***
      * Description: Obtains the local installed version for comparison against the
      * server's latest version
      */
@@ -56,7 +56,7 @@ public abstract class UpdaterBase extends UpdateEventNotifier implements IUpdate
         return this.storage.ReadVersion();
     }
 
-    /**
+    /***
      * Description: Logic for comparing local version with server version to determine if update is needed
      * Triggers update event when an update is detected
      */
@@ -73,10 +73,10 @@ public abstract class UpdaterBase extends UpdateEventNotifier implements IUpdate
         }
     }
 
-    /**
-     * Description: A method signature for handling the UpdateDetected event
-     *
-     * @param args
+    /***
+     * Description: A method signature for handling the UpdateDetected event.
+     * This implementation implicitly runs the update without interaction.
+     * @param args Update Args object contains update details
      */
     @Override
     public void UpdateDetectedHandler(UpdateArgs args) {
@@ -84,7 +84,7 @@ public abstract class UpdaterBase extends UpdateEventNotifier implements IUpdate
         this.updateaction.Run(this.GetUpdateArgs(),this.storage);
     }
 
-    /**
+    /***
      * Respond to download events to print its progress to the console
      * Print out download progress
      * @param rbc      Readable Byte Channel (Stream)
@@ -105,6 +105,11 @@ public abstract class UpdaterBase extends UpdateEventNotifier implements IUpdate
         }
     }
 
+    /***
+     * Abstract signature to allow delayed calling of update installation. This method
+     * is called implicitly from UpdateArgs.BeginUpdate()
+     * @param ua
+     */
     public abstract void InstallUpdate(UpdateArgs ua);
     /**
      * Created by Tius on 10/10/2016.

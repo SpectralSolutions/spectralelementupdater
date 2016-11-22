@@ -24,10 +24,10 @@ public abstract class UpdateEventNotifier {
             l.UpdateDetectedHandler(UpdateArgs);
     }
 
-    protected void UpdateSuccess() {
+    protected void UpdateSuccess(String currentVersion) {
         // Notify everybody that may be interested.
         for (IUpdateEventsListener l : listeners)
-            l.UpdateSuccessHandler();
+            l.UpdateSuccessHandler(currentVersion);
     }
 
     protected void UpdateFailure(String message) {

@@ -25,7 +25,7 @@ public class elementupdater  {
     public static class updaterTest implements IUpdateEventsListener{
 
         @Override
-        public void UpdateSuccessHandler()  {
+        public void UpdateSuccessHandler(String installedVersion)  {
             System.out.println("Sick.");
         }
 
