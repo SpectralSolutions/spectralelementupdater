@@ -1,8 +1,15 @@
-package com.spectralsolutions.elementupdater;
+package com.spectralsolutions.elementupdater.updater;
 
-import com.spectralsolutions.elementupdater.common.*;
+import com.mongodb.DB;
+import com.mongodb.MongoClient;
+import com.spectralsolutions.elementupdater.UpdaterBase;
+import com.spectralsolutions.elementupdater.common.ILocalStorage;
+import com.spectralsolutions.elementupdater.common.IUpdateAction;
+import com.spectralsolutions.elementupdater.common.IUpdateEventsListener;
+import com.spectralsolutions.elementupdater.objects.MongoConfig;
 import com.spectralsolutions.elementupdater.objects.UpdateActionResult;
 import com.spectralsolutions.elementupdater.objects.UpdateArgs;
+import org.jongo.Jongo;
 
 /**
  * Created by Tius on 9/25/2016.
@@ -11,28 +18,41 @@ import com.spectralsolutions.elementupdater.objects.UpdateArgs;
  * and is very quick to implement
  *
  */
-public class UpdateWithDropbox extends UpdaterBase {
+public class UpdateWithMongo extends UpdaterBase {
     //Url to a text file formatted with the current action information
     private final String dropboxurl = "https://www.dropbox.com/s/onvsnt5jvubkucb/update.txt?dl=1";
     private boolean UseDefaultProgressCallback = false;
+    private UpdateArgs updateArgs;
 
-    public UpdateWithDropbox(IUpdateAction updateaction, ILocalStorage storage)
+    public UpdateWithMongo(IUpdateAction updateaction, ILocalStorage storage)
     {
         super(updateaction,storage);
     }
 
-    public UpdateWithDropbox(IUpdateAction updateaction, ILocalStorage storage, IUpdateEventsListener listener)
+    public UpdateWithMongo(IUpdateAction updateaction, ILocalStorage storage, IUpdateEventsListener listener)
     {
         super(updateaction,storage,listener);
     }
 
     @Override
     public UpdateArgs GetUpdateArgs() {
-        String serverresult = InstallUtility.DownloadToString(dropboxurl);
-        String[] temp = serverresult.split("\\|");//the string is '|' delimited
-        UpdateArgs args = null;
-        args = new UpdateArgs(temp[0], temp[1]);
-        return args;
+        //
+        if(updateArgs != null)
+        {
+            return updateArgs;
+        }else
+        {
+            //TODO: Connect to db
+            MongoConfig config = MongoConfig.PROD;
+            MongoClient mongoClient = new MongoClient(config.getPrimaryMongoURI());
+            DB database = mongoClient.getDB(config.getDatabase());
+            Jongo jongo = new Jongo(database);
+            //TODO: Pull the first version object
+            UpdateArgs updateArgs = jongo.getCollection("updates").findOne("{}").as(UpdateArgs.class);
+            //TODO: Instantiate updateArgs
+            this.updateArgs = updateArgs;
+            return  updateArgs;
+        }
     }
 
     /**

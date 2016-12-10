@@ -167,6 +167,8 @@ public class InstallUtility {
     }
 
     /**
+     * Description: Custom implementation of ReadableByteChannel to capture progress events in
+     * a download stream
      * Created by Tius on 9/25/2016.
      */
     public static class CallbackByteChannel implements ReadableByteChannel{
