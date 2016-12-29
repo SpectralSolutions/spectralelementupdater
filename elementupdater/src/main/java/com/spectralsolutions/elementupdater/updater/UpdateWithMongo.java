@@ -14,13 +14,10 @@ import org.jongo.Jongo;
 /**
  * Created by Tius on 9/25/2016.
  *
- * Description: This class reads information from a formatted dropbox text file
- * and is very quick to implement
+ * Description: This class reads information from a record in a MongoDB database
  *
  */
 public class UpdateWithMongo extends UpdaterBase {
-    //Url to a text file formatted with the current action information
-    private final String dropboxurl = "https://www.dropbox.com/s/onvsnt5jvubkucb/update.txt?dl=1";
     private boolean UseDefaultProgressCallback = false;
     private UpdateArgs updateArgs;
 
