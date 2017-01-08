@@ -24,8 +24,8 @@ public class UpdateWithMongoTest {
         MongoConfig config = MongoConfig.PROD;
         MongoClient mongoClient = new MongoClient(config.getPrimaryMongoURI());
         DB database = mongoClient.getDB(config.getDatabase());
-        //Jongo jongo = new Jongo(database);
-        //jongo.getCollection("updates").save(new UpdateArgs("1.8.8","http://update.com/updates"));
+        Jongo jongo = new Jongo(database);
+        jongo.getCollection("updates").save(new UpdateArgs("1.8.8","http://update.com/updates"));
     }
 
     @Test
@@ -43,7 +43,7 @@ public class UpdateWithMongoTest {
         MongoClient mongoClient = new MongoClient(config.getPrimaryMongoURI());
         DB database = mongoClient.getDB(config.getDatabase());
         Jongo jongo = new Jongo(database);
-        UpdateArgs a = jongo.getCollection("updates").findOne("{}").as(UpdateArgs.class);
+        UpdateArgs a = jongo.getCollection("updates").findOne("{'LatestVersion':'1.8.8'}").as(UpdateArgs.class);
         jongo.getCollection("updates").remove("{_id: #}", new ObjectId(a._id));
     }
 
