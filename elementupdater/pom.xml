@@ -70,7 +70,7 @@
                     <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory> <!-- matches distribution management repository url above -->
                     <branch>refs/heads/mvn-repo</branch>                       <!-- remote branch name -->
                     <includes><include>**/*</include></includes>
-                    <repositoryName>spectralelementupdater</repositoryName>      <!-- github repo name -->
+                    <repositoryName>elementupdater</repositoryName>      <!-- github repo name -->
                     <repositoryOwner>SpectralSolutions</repositoryOwner>    <!-- github username  -->
                 </configuration>
                 <executions>
