@@ -52,7 +52,20 @@ public class UpdateWithMongo extends UpdaterBase {
         }
     }
 
-    /**
+    /***
+     * Compare local and remote versions ignoring the last digits of the version number
+     * @param RemoteVersion
+     * @param LocalVersion
+     * @return
+     */
+    public boolean RunningLatestVersion(String RemoteVersion, String LocalVersion)
+    {
+        String latev = RemoteVersion.substring(0, RemoteVersion.lastIndexOf('.'));
+        String localv = LocalVersion.substring(0,LocalVersion.lastIndexOf('.'));
+        return localv.equals(latev);
+    }
+
+    /***
      * Description: Logic for comparing local version with server version to determine if update is needed
      * Triggers update event when an update is detected
      */
@@ -62,26 +75,51 @@ public class UpdateWithMongo extends UpdaterBase {
         UpdateArgs ua = this.GetUpdateArgs();
         String localversion = this.GetLocalVersion();
         System.out.println(String.format("Local version is: %s",localversion));
+        //print
         if(localversion.isEmpty())
         {
-            //failed to retrieve local version
-            //trigger update failure passing error message
-            this.UpdateFailure("Could not retrieve the local version value.");
+            UpdateFailure("Could not retrieve the local version - Does version.xml exist?");
             return;
-            //exit
         }
-        //simple non equality check
-        if(!ua.LatestVersion.equals(localversion))
+        String remoteversion = ua.LatestVersion;
+        if(!this.RunningLatestVersion(remoteversion,localversion))
         {
-            //trigger update detected event
             ua.setUpdater(this);
-            this.UpdateDetected(ua);
-        }else
-        {
-            //System.out.println(String.format("We are running the latest version: %s", localversion));
-            this.UpToDate(localversion);
+            UpdateDetected(ua);
+        }else{
+            UpToDate(localversion);
         }
     }
+//    /**
+//     * Description: Logic for comparing local version with server version to determine if update is needed
+//     * Triggers update event when an update is detected
+//     */
+//    @Override
+//    public void CheckUpdate() {
+//        //if update is detected trigger event
+//        UpdateArgs ua = this.GetUpdateArgs();
+//        String localversion = this.GetLocalVersion();
+//        System.out.println(String.format("Local version is: %s",localversion));
+//        if(localversion.isEmpty())
+//        {
+//            //failed to retrieve local version
+//            //trigger update failure passing error message
+//            this.UpdateFailure("Could not retrieve the local version value.");
+//            return;
+//            //exit
+//        }
+//        //simple non equality check
+//        if(!ua.LatestVersion.equals(localversion))
+//        {
+//            //trigger update detected event
+//            ua.setUpdater(this);
+//            this.UpdateDetected(ua);
+//        }else
+//        {
+//            //System.out.println(String.format("We are running the latest version: %s", localversion));
+//            this.UpToDate(localversion);
+//        }
+//    }
 
     /**
      * Description: Logic for comparing local version with server version to determine if update is needed
