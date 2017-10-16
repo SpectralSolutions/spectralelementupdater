@@ -39,14 +39,12 @@ public class UpdateWithMongo extends UpdaterBase {
             return updateArgs;
         }else
         {
-            //TODO: Connect to db
             MongoConfig config = MongoConfig.PROD;
             MongoClient mongoClient = new MongoClient(config.getPrimaryMongoURI());
             DB database = mongoClient.getDB(config.getDatabase());
             Jongo jongo = new Jongo(database);
-            //TODO: Pull the first version object
+            //Pull the first version object
             UpdateArgs updateArgs = jongo.getCollection("updates").findOne("{}").as(UpdateArgs.class);
-            //TODO: Instantiate updateArgs
             this.updateArgs = updateArgs;
             return  updateArgs;
         }
@@ -90,36 +88,6 @@ public class UpdateWithMongo extends UpdaterBase {
             UpToDate(localversion);
         }
     }
-//    /**
-//     * Description: Logic for comparing local version with server version to determine if update is needed
-//     * Triggers update event when an update is detected
-//     */
-//    @Override
-//    public void CheckUpdate() {
-//        //if update is detected trigger event
-//        UpdateArgs ua = this.GetUpdateArgs();
-//        String localversion = this.GetLocalVersion();
-//        System.out.println(String.format("Local version is: %s",localversion));
-//        if(localversion.isEmpty())
-//        {
-//            //failed to retrieve local version
-//            //trigger update failure passing error message
-//            this.UpdateFailure("Could not retrieve the local version value.");
-//            return;
-//            //exit
-//        }
-//        //simple non equality check
-//        if(!ua.LatestVersion.equals(localversion))
-//        {
-//            //trigger update detected event
-//            ua.setUpdater(this);
-//            this.UpdateDetected(ua);
-//        }else
-//        {
-//            //System.out.println(String.format("We are running the latest version: %s", localversion));
-//            this.UpToDate(localversion);
-//        }
-//    }
 
     /**
      * Description: Logic for comparing local version with server version to determine if update is needed
